@@ -4,7 +4,7 @@
 using namespace std;
 
 float temp;
-int choice;
+char choice;
 float FtoC(temp);
 float FtoK(temp);
 float CtoF(temp);
@@ -14,26 +14,44 @@ float KtoC(temp);
 
 float FtoC(temp){
     float tempFC=(temp-32.0)*5.0/9.0
-    cout << tempFC << "C" << endl;
+    if (tempFC<-273.15)
+        cout << "-9999999" << endl;
+    else
+        cout << tempFC << "C" << endl;
 }
 float FtoK(temp){
     float tempFK=(temp+459.67)*5.0/9.0
-    cout << tempFK << "K" << endl;
+    if (tempFK<0)
+        cout << "-9999999" << endl;
+    else
+        cout << tempFK << "K" << endl;
 }
 float CtoF(temp){
     float tempCF=temp*5.0/9.0+32.0
-    cout << tempCF << "F" << endl;
+    if (tempCF<-459.67)
+        cout << "-9999999" << endl;
+    else
+        cout << tempCF << "F" << endl;
 }
 float CtoK(temp){
     float tempCK=temp+273.15
-    cout << tempCK << "K" << endl;
+    if (tempCK<0)
+        cout << "-9999999" << endl;
+    else
+        cout << tempCK << "K" << endl;
 }
 float KtoF(temp){
     float tempKF=temp*5.0/9.0-459.67
-    cout << tempKF << "F" << endl;
+    if (tempKF<-459.67)
+        cout << "-9999999" << endl;
+    else
+        cout << tempKF << "F" << endl;
 }
 float KtoC(temp){
     float tempKC=temp-273.15
+    if (tempKC<-273.15)
+        cout << "-9999999" << endl;
+    else
     cout << tempKC << "C" << endl;
 }
 
@@ -75,5 +93,6 @@ int main(){
         default:
         return 0;
     }
-
+    
+    system("cls");
 }

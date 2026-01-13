@@ -35,6 +35,7 @@ int main(){
         }
         if (dataCounter>=100){
                 cout << "BŁĄD: Przekroczono maksymalną liczbę zapisów w historii!" << endl;
+        }
             
             switch (choice){
                 case 1:
@@ -93,18 +94,142 @@ int main(){
 
                 case 7:
                     return 0;
+                    break;
 
                 case 8:
                     cout << "Historia przeliczeń: " << endl;
-                    for (int i=0;i<dataCounter;i=i+2){
-                        cout << TempData[i] << " " << Jednostka[i] << "=" << TempData[i+1] << " " << Jednostka[i+1] << endl;
+                    choice=0;
+                    cout << "Wybierz zbiór danych do wyświetlenia: " << endl;
+                    cout << "1 - Przeliczenia C -> X" << endl;
+                    cout << "2 - Przeliczenia F -> X" << endl;
+                    cout << "3 - Przeliczenia K -> X" << endl;
+                    cout << "4 - Wszystkie przeliczenia" << endl;
+                    cin >> choice;
+                    switch (choice){
+                        case 1:{
+                            for (int i=0;i<dataCounter;i=i+2){
+                                if (Jednostka[i]=='C')
+                                    cout << i << " " << TempData[i] << " " << Jednostka[i] << "=" << TempData[i+1] << " " << Jednostka[i+1] << endl;
+                            }
+                            break;
+                        }
+                        case 2:{
+                            for (int i=0;i<dataCounter;i=i+2){
+                                if (Jednostka[i]=='F')
+                                    cout << i << " " << TempData[i] << " " << Jednostka[i] << "=" << TempData[i+1] << " " << Jednostka[i+1] << endl;
+                            }
+                            break;
+                        }
+                        case 3:{
+                            for (int i=0;i<dataCounter;i=i+2){
+                                if (Jednostka[i]=='K')
+                                    cout << i << " " << TempData[i] << " " << Jednostka[i] << "=" << TempData[i+1] << " " << Jednostka[i+1] << endl;
+                            }
+                            break;
+                        }
+                        case 4:{ 
+                            for (int i=0;i<dataCounter;i=i+2){
+                                cout << i << " " << TempData[i] << " " << Jednostka[i] << "=" << TempData[i+1] << " " << Jednostka[i+1] << endl;
+                            }
+                            break;
+                        }  
+                        default:
+                            cout << "BŁĄD: Nieprawidłowy wybór!" << endl;
+                            break;
+                        
                     }
+                    cout << "wybierz operację na danych" << endl;
+                    cout << "1 - usuń historię" << endl;
+                    cout << "2 - modfikuj historię" << endl;
+                    cout << "3 - losowe wypełnienie historii" << endl;
+                    cout << "4 - powrót do menu głównego" << endl;
+                    cin >> choice;
+                    switch (choice){
+                        case 1:
+                            dataCounter=0;
+                            cout << "Historia została usunięta." << endl;
+                        break;
+
+                        case 2:
+                            int index;
+                            char newUnit;
+                            double newTemp;
+                            cout << "Podaj indeks wpisu do modyfikacji: ";
+                            cin >> index;
+                            if ((index<0 || index>=dataCounter) && index%2!=0){
+                                cout << "BŁĄD: Nieprawidłowy indeks!" << endl;
+                                break;
+                            }
+                            cout << "Podaj nową temperaturę: ";
+                            cin >> newTemp;
+                            cout << "Podaj nową jednostkę (C/F/K): ";
+                            cin >> newUnit;
+                            if (newUnit!='C' && newUnit!='F' && newUnit!='K'){
+                                cout << "BŁĄD: Nieprawidłowa jednostka!" << endl;
+                                break;
+                            }
+                            TempData[index]=newTemp;
+                            Jednostka[index]=newUnit;
+                            cout << "Wpis został zmodyfikowany." << endl;
+                        break;
+
+                        case 3:
+                            int numEnt;
+                            cout << "Ile losowych wpisów dodać do historii? ";
+                            cin >> numEnt;
+                            if (dataCounter+numEnt*2>100){
+                                cout << "BŁĄD: Przekroczono maksymalną liczbę zapisów w historii!" << endl;
+                                break;
+                            }
+                            else{
+                                srand(time(0));
+                                for (int i=dataCounter;i<dataCounter+numEnt*2;i=i+2){
+                                    TempData[i]=rand()%1000/10.0;
+                                    int unitType=rand()%3;
+                                    if (unitType==0){
+                                        Jednostka[i]='C';
+                                        if (rand()%2==0)
+                                            TempData[i+1]=CtoF(TempData[i]);
+                                        else
+                                            TempData[i+1]=CtoK(TempData[i]);
+                                    }
+                                    else if (unitType==1){
+                                        Jednostka[i]='F';
+                                        if (rand()%2==0)
+                                            TempData[i+1]=FtoC(TempData[i]);
+                                        else
+                                            TempData[i+1]=FtoK(TempData[i]);
+                                    }
+                                    else{
+                                        Jednostka[i]='K';
+                                        if (rand()%2==0)
+                                            TempData[i+1]=KtoC(TempData[i]);
+                                        else
+                                            TempData[i+1]=KtoF(TempData[i]);
+                                    }
+                                    dataCounter=dataCounter+2;
+                                }
+                            }
+
+                            cout << "Historia została wypełniona losowymi danymi." << endl;
+                            break;
+
+                        case 4:
+                            break;
+
+                        default:
+                            cout << "BŁĄD: Nieprawidłowy wybór!" << endl;
+                        break;
+                    }
+                    choice=0;
+
 
                 default:
                     cout << "BŁĄD: Nieprawidłowy wybór!" << endl;
                 break;
+                
             }
-    }
+          
         
         system("cls");
     }

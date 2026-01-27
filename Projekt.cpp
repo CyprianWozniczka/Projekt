@@ -1,14 +1,14 @@
 #include <iostream>
 #include <stdlib.h>
 #include "Projekt.h"
+#include <time.h>
 using namespace std;
 
 float temp;
 char choice;
-int dataCounter;
+int dataCounter=0;
 
 int main(){
-    int dataCounter=0;
     double TempData[100];
     char Jednostka[100];
     while (1){
@@ -23,13 +23,13 @@ int main(){
         cin >> choice;
         cout << "Podaj temperaturę do przeliczenia: ";
         cin >> temp;
-        if (char choice >1 && char choice <7){
+        if (char choice >='1' && char choice <='7'){ //Zapis wprowadzonej temp.
             TempData[dataCounter]=temp;
-            if (char choice==1 || char choice==2)
+            if (char choice=='1' || char choice=='2')
                 Jednostka[dataCounter]='F';
-            else if (char choice==3 || char choice==4)
+            else if (char choice=='3' || char choice=='4')
                 Jednostka[dataCounter]='C';
-            else if (char choice==5 || char choice==6)
+            else if (char choice=='5' || char choice=='6')
                 Jednostka[dataCounter]='K';
             dataCounter++;
         }
@@ -38,8 +38,8 @@ int main(){
         }
             
             switch (choice){
-                case 1:
-                    FtoC(float temp);
+                case '1':
+                    FtoC(temp);
                     if (dataCounter<100){
                         TempData[dataCounter]=FtoC(temp);
                         Jednostka[dataCounter]='C';
@@ -47,8 +47,8 @@ int main(){
                     }
                 break;
 
-                case 2:
-                    FtoK(float temp);
+                case '2':
+                    FtoK(temp);
                     if (dataCounter<100){
                         TempData[dataCounter]=FtoK(temp);
                         Jednostka[dataCounter]='K';
@@ -56,8 +56,8 @@ int main(){
                     }
                 break;
 
-                case 3:
-                    CtoF(float temp);
+                case '3':
+                    CtoF(temp);
                     if (dataCounter<100){
                         TempData[dataCounter]=CtoF(temp);
                         Jednostka[dataCounter]='F';
@@ -65,8 +65,8 @@ int main(){
                     }
                 break;
 
-                case 4:
-                    CtoK(float temp);
+                case '4':
+                    CtoK(temp);
                     if (dataCounter<100){
                         TempData[dataCounter]=CtoK(temp);
                         Jednostka[dataCounter]='K';
@@ -74,8 +74,8 @@ int main(){
                     }
                 break;
 
-                case 5:
-                    KtoC(float temp);
+                case '5':
+                    KtoC(temp);
                     if (dataCounter<100){
                         TempData[dataCounter]=KtoC(temp);
                         Jednostka[dataCounter]='C';
@@ -83,8 +83,8 @@ int main(){
                     }
                 break;
 
-                case 6:
-                    KtoF(float temp);
+                case '6':
+                    KtoF(temp);
                     if (dataCounter<100){
                     TempData[dataCounter]=KtoF(temp);
                     Jednostka[dataCounter]='F';
@@ -92,11 +92,11 @@ int main(){
                     }
                 break;
 
-                case 7:
+                case '7':
                     return 0;
                     break;
 
-                case 8:
+                case '8':
                     cout << "Historia przeliczeń: " << endl;
                     choice=0;
                     cout << "Wybierz zbiór danych do wyświetlenia: " << endl;
@@ -106,28 +106,28 @@ int main(){
                     cout << "4 - Wszystkie przeliczenia" << endl;
                     cin >> choice;
                     switch (choice){
-                        case 1:{
+                        case '1':{
                             for (int i=0;i<dataCounter;i=i+2){
                                 if (Jednostka[i]=='C')
                                     cout << i << " " << TempData[i] << " " << Jednostka[i] << "=" << TempData[i+1] << " " << Jednostka[i+1] << endl;
                             }
                             break;
                         }
-                        case 2:{
+                        case '2':{
                             for (int i=0;i<dataCounter;i=i+2){
                                 if (Jednostka[i]=='F')
                                     cout << i << " " << TempData[i] << " " << Jednostka[i] << "=" << TempData[i+1] << " " << Jednostka[i+1] << endl;
                             }
                             break;
                         }
-                        case 3:{
+                        case '3':{
                             for (int i=0;i<dataCounter;i=i+2){
                                 if (Jednostka[i]=='K')
                                     cout << i << " " << TempData[i] << " " << Jednostka[i] << "=" << TempData[i+1] << " " << Jednostka[i+1] << endl;
                             }
                             break;
                         }
-                        case 4:{ 
+                        case '4':{ 
                             for (int i=0;i<dataCounter;i=i+2){
                                 cout << i << " " << TempData[i] << " " << Jednostka[i] << "=" << TempData[i+1] << " " << Jednostka[i+1] << endl;
                             }
@@ -145,18 +145,18 @@ int main(){
                     cout << "4 - powrót do menu głównego" << endl;
                     cin >> choice;
                     switch (choice){
-                        case 1:
+                        case '1':
                             dataCounter=0;
                             cout << "Historia została usunięta." << endl;
                         break;
 
-                        case 2:
+                        case '2':
                             int index;
                             char newUnit;
                             double newTemp;
                             cout << "Podaj indeks wpisu do modyfikacji: ";
                             cin >> index;
-                            if ((index<0 || index>=dataCounter) && index%2!=0){
+                            if (index<0 || index>=dataCounter || index%2!=0){
                                 cout << "BŁĄD: Nieprawidłowy indeks!" << endl;
                                 break;
                             }
@@ -173,7 +173,7 @@ int main(){
                             cout << "Wpis został zmodyfikowany." << endl;
                         break;
 
-                        case 3:
+                        case '3':
                             int numEnt;
                             cout << "Ile losowych wpisów dodać do historii? ";
                             cin >> numEnt;
@@ -214,7 +214,7 @@ int main(){
                             cout << "Historia została wypełniona losowymi danymi." << endl;
                             break;
 
-                        case 4:
+                        case '4':
                             break;
 
                         default:
@@ -244,15 +244,15 @@ float FtoC(float temp){
     return tempFC;
 }
 float FtoK(float temp){
-    float tempFK=(temp+459.67)*5.0/9.0
+    float tempFK=(temp+459.67)*5.0/9.0;
     if (tempFK<0)
         cout << "MORON" << endl;
     else
         cout << tempFK << "K" << endl;
     return tempFK;
 }
-float CtoF(floattemp){
-    float tempCF=temp*5.0/9.0+32.0
+float CtoF(float temp){
+    float tempCF=temp*9.0/5.0+32.0;
     if (tempCF<-459.67)
         cout << "MORON" << endl;
     else
@@ -260,7 +260,7 @@ float CtoF(floattemp){
     return tempCF;
 }
 float CtoK(float temp){
-    float tempCK=temp+273.15
+    float tempCK=temp+273.15;
     if (tempCK<0)
         cout << "MORON" << endl;
     else
@@ -268,7 +268,7 @@ float CtoK(float temp){
     return tempCK;
 }
 float KtoF(float temp){
-    float tempKF=temp*5.0/9.0-459.67
+    float tempKF=temp*9.0/5.0-459.67;
     if (tempKF<-459.67)
         cout << "MORON" << endl;
     else
@@ -276,7 +276,7 @@ float KtoF(float temp){
     return tempKF;
 }
 float KtoC(float temp){
-    float tempKC=temp-273.15
+    float tempKC=temp-273.15;
     if (tempKC<-273.15)
         cout << "MORON" << endl;
     else
